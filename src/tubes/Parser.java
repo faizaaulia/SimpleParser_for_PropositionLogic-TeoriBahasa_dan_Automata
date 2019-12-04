@@ -1,31 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tubes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author faizaaulia
- */
+/** @author faizaaulia */
 public class Parser {
 
     private String formula;
-    private List<Integer> token;
+    private List<String> token;
     private List<String> kata;
     
     public Parser(String formula) {
         this.formula = formula;
         token = new ArrayList<>();
         kata = new ArrayList<>();
-    }
-
-    public String getFormula() {
-        return formula;
     }
     
     public void getSuku() {
@@ -34,21 +22,42 @@ public class Parser {
         String con = "";
         for (int i = 0; i < p; i++) {
             if (arr[i] != ' ' || i == p-1) {
-                if (i == p-1) {
+                if (arr[i] == '(' || (i != p-1 && arr[i+1] == '(')) {
                     con += arr[i];
                     kata.add(con);
+                    con = "";
+                } else if (i == p-1) {
+                    if (arr[i] == ' ') {
+                        kata.add(con);
+                        con = "";
+                    } else if (arr[i] == ')') {
+                        con += arr[i];
+                        kata.add(con);
+                        con = "";
+                    } else {
+                        con += arr[i];
+                        kata.add(con);
+                        con = "";
+                    }
+                } else {
+                    if (i != p-1 && arr[i+1] == ')') {
+                        con += arr[i];
+                        kata.add(con);
+                        con = "";
+                    } else
+                        con += arr[i];
                 }
-                con += arr[i];
             } else {
-                kata.add(con);
-                con = "";
+                if (arr[i-1] != '(') {
+                    if (arr[i-1] == ' ')
+                        con = "";
+                    else {
+                        kata.add(con);
+                        con = "";
+                    }
+                }
             }
         }
-        //System.out.println("Jumlah suku: " + suku.size());
-        /*
-        for (String i:suku) {
-            System.out.println(i);
-        } */
     }
     
     public boolean isOperand(String x) {
@@ -128,57 +137,72 @@ public class Parser {
     public boolean isBuka(String x) {
         char[] cek = x.toCharArray();
         return cek[0] == '(';
-//        if (cek.length == 1) {
-//            return cek[0] == '(';
-//        } else {
-//            return false;
-//        }
     }
     
     public boolean isTutup(String x) {
         char[] cek = x.toCharArray();
         return cek[0] == ')';
-//        if (cek.length == 1) {
-//            return cek[0] == ')';
-//        } else {
-//            return false;
-//        }
     }
     
     public void prosesToken() {
         String cek;
+        char[] x;
         this.getSuku();
         for (int i = 0; i < kata.size(); i++) {
             cek = kata.get(i);
             if (isOperand(cek))
-                token.add(1);
+                token.add("1");
             else if (isNot(cek))
-                token.add(2);
+                token.add("2");
             else if (isAnd(cek))
-                token.add(3);
+                token.add("3");
             else if (isOr(cek))
-                token.add(4);
+                token.add("4");
             else if (isXor(cek))
-                token.add(5);
+                token.add("5");
             else if (isIf(cek))
-                token.add(6);
+                token.add("6");
             else if (isThen(cek))
-                token.add(7);
+                token.add("7");
             else if (isIff(cek))
-                token.add(8);
+                token.add("8");
             else if (isBuka(cek))
-                token.add(9);
+                token.add("9");
             else if (isTutup(cek))
-                token.add(10);
-            else token.add(11);
+                token.add("10");
+            else 
+                token.add("error");
+        }
+    }
+    
+    public void validation() {
+        Validator validate = new Validator();
+        System.out.print("Output: ");
+        if (validate.cekAll(token))
+            System.out.println("VALID");
+        else
+            System.out.println("TIDAK VALID");
+//        System.out.println(validate.isNoError(token));
+//        System.out.println(validate.panjang(token));
+//        System.out.println(validate.posisiOperator(token));
+//        System.out.println(validate.cekOperand(token));
+    }
+    
+    public void showKata() {
+        //this.getSuku();
+        System.out.println("Kata: ");
+        int j = 0;
+        for (String i:kata) {
+            System.out.println(i + " " + j);
+            j++;
         }
     }
     
     public void showToken() {
         System.out.print("Token: ");
-        for (int i:token) {
-            if(i == 11) {
-                System.out.println("error");
+        for (String i:token) {
+            if(i == "error") {
+                System.out.print("error");
                 break;
             }
             System.out.print(i + " ");
