@@ -156,8 +156,8 @@ public class Validator {
         boolean cek = true;
         //jika panjang token hanya 1
         if (token.size() == 1) 
-            //jika token merupakan operator atau operand
-            if (isOperator(token.get(0)) || "1".equals(token.get(0)))
+            //jika token merupakan operator
+            if (isOperator(token.get(0)))
                 cek = false;
         return cek;
     }
