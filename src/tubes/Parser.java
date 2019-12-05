@@ -17,6 +17,7 @@ public class Parser {
     }
     
     public void getSuku() {
+        //memisahkan inputan menjadi per kata dan dimasukkan ke arr
         int p = formula.length();
         char[] arr = formula.toCharArray();
         String con = "";
@@ -61,11 +62,13 @@ public class Parser {
     }
     
     public boolean isOperand(String x) {
+        //memeriksa apakah string merupakan operand
         return "p".equals(x) || "q".equals(x) 
                 || "r".equals(x) || "s".equals(x);
     }
     
     public boolean isNot(String x) {
+        //memeriksa apakah string merupakan operator not
         char[] cek = x.toCharArray();
         if (cek.length == 3) {
             return cek[0] == 'n' && cek[1] 
@@ -76,6 +79,7 @@ public class Parser {
     }
     
     public boolean isAnd(String x) {
+        //memeriksa apakah string merupakan operator and
         char[] cek = x.toCharArray();
         if (cek.length == 3) {
             return cek[0] == 'a' && cek[1] 
@@ -86,6 +90,7 @@ public class Parser {
     }
     
     public boolean isOr(String x) {
+        //memeriksa apakah string merupakan operator or
         char[] cek = x.toCharArray();
         if (cek.length == 2) {
             return cek[0] == 'o' && cek[1] 
@@ -96,6 +101,7 @@ public class Parser {
     }
     
     public boolean isXor(String x) {
+        //memeriksa apakah string merupakan operator xor
         char[] cek = x.toCharArray();
         if (cek.length == 3) {
             return cek[0] == 'x' && cek[1] 
@@ -106,6 +112,7 @@ public class Parser {
     }
     
     public boolean isIf(String x) {
+        //memeriksa apakah string merupakan operator if
         char[] cek = x.toCharArray();
         if (cek.length == 2) {
             return cek[0] == 'i' && cek[1] == 'f';
@@ -115,6 +122,7 @@ public class Parser {
     }
     
     public boolean isThen(String x) {
+        //memeriksa apakah string merupakan operator then
         char[] cek = x.toCharArray();
         if (cek.length == 4) {
             return cek[0] == 't' && cek[1] == 'h' 
@@ -125,6 +133,7 @@ public class Parser {
     }
     
     public boolean isIff(String x) {
+        //memeriksa apakah string merupakan operator iff
         char[] cek = x.toCharArray();
         if (cek.length == 3) {
             return cek[0] == 'i' && cek[1] 
@@ -135,16 +144,19 @@ public class Parser {
     }
     
     public boolean isBuka(String x) {
+        //memeriksa apakah string merupakan grouping
         char[] cek = x.toCharArray();
         return cek[0] == '(';
     }
     
     public boolean isTutup(String x) {
+        //memeriksa apakah string merupakan grouping
         char[] cek = x.toCharArray();
         return cek[0] == ')';
     }
     
     public void prosesToken() {
+        //memproses token dari setiap kata
         String cek;
         char[] x;
         this.getSuku();
@@ -178,14 +190,15 @@ public class Parser {
     public void validation() {
         Validator validate = new Validator();
         System.out.print("Output: ");
-        if (validate.cekAll(token))
+        if (validate.cekAll(token) == true)
             System.out.println("VALID");
         else
-            System.out.println("TIDAK VALID");
-//        System.out.println(validate.isNoError(token));
-//        System.out.println(validate.panjang(token));
-//        System.out.println(validate.posisiOperator(token));
-//        System.out.println(validate.cekOperand(token));
+            System.out.println("TIDAK VALID ");
+        System.out.println("no error " + validate.isNoError(token));
+        System.out.println("panjang " + validate.panjang(token));
+        System.out.println("operator " + validate.posisiOperator(token));
+        System.out.println("operand " + validate.cekOperand(token));
+        System.out.println("grouping " + validate.isGrouping(token));
     }
     
     public void showKata() {
