@@ -113,7 +113,7 @@ public class Validator {
                 break;
             }
         }
-        //
+        //jika ditemukan operator di awal/akhir atau di dua token awal
         if (isOperator(token.get(0)) || isOperator(token.get(p-1)) || 
                 "8".equals(token.get(0)) || "8".equals(token.get(p-1)) || 
                 isOperator(token.get(0)) && isOperator(token.get(1)) ||
@@ -122,17 +122,20 @@ public class Validator {
         return cek1 && cek2;
     }
     
+    //memerika token merupakan operator yg membutuhkan pembanding
     public boolean isOperatorBanding(String token) {
         return "3".equals(token) || "4".equals(token) || "5".equals(token)
                 || "7".equals(token) || "8".equals(token);
     }
     
+    //memeriksa token merupakan operand
     public boolean cekOperand(List<String> token) {
         List<Integer> arr = new ArrayList<>(); 
         int i = 0;
         boolean cek = true;
         //System.out.println("Token Size: " + token.size());
         for (int j = 0; j < token.size(); j++) {
+            //jika token merupakan operand dimasukkan ke arr
             if ("1".equals(token.get(j))) {
                 arr.add(j);
                 i++;
@@ -140,6 +143,7 @@ public class Validator {
         }
         for (int j = 0; j < arr.size(); j++) {
             if (j != arr.size()-1) {
+                //jika operand bertemu dengan operand
                 if (arr.get(j) - arr.get(j+1) == -1)
                     cek = false;
             }
@@ -147,23 +151,29 @@ public class Validator {
         return cek;
     }
     
+    //memeriksa panjang token
     public boolean panjang(List<String> token) {
         boolean cek = true;
+        //jika panjang token hanya 1
         if (token.size() == 1) 
+            //jika token merupakan operator atau operand
             if (isOperator(token.get(0)) || "1".equals(token.get(0)))
                 cek = false;
         return cek;
     }
     
+    //memeriksa ditemukan token error atau tidak
     public boolean isNoError(List<String> token) {
         boolean cek = true;
         for(String s:token) {
+            //jika ditemukan token error
             if (s == "error")
                 cek = false;
         }
         return cek;
     }
     
+    //cek semua kondisi di atas
     public boolean cekAll(List<String> token) {
         return isNoError(token) && panjang(token) && posisiOperator(token) && isGrouping(token)
                 && cekOperand(token);
