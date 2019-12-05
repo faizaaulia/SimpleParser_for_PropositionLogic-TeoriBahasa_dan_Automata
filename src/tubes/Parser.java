@@ -194,11 +194,11 @@ public class Parser {
             System.out.println("VALID");
         else
             System.out.println("TIDAK VALID ");
-        System.out.println("no error " + validate.isNoError(token));
-        System.out.println("panjang " + validate.panjang(token));
-        System.out.println("operator " + validate.posisiOperator(token));
-        System.out.println("operand " + validate.cekOperand(token));
-        System.out.println("grouping " + validate.isGrouping(token));
+//        System.out.println("no error " + validate.isNoError(token));
+//        System.out.println("panjang " + validate.panjang(token));
+//        System.out.println("operator " + validate.posisiOperator(token));
+//        System.out.println("operand " + validate.cekOperand(token));
+//        System.out.println("grouping " + validate.isGrouping(token));
     }
     
     public void showKata() {
