@@ -108,16 +108,16 @@ public class Validator {
                 }
             } 
             //jika ditemukan operator di akhir formula
-            else if (isOperator(token.get(i)) && i == token.size()-1) {
-                cek2 = false;
-                break;
-            }
+//            else if (isOperator(token.get(i)) && i == token.size()-1) {
+//                cek2 = false;
+//                break;
+//            }
         }
         //jika ditemukan operator di awal/akhir atau di dua token awal
-        if (isOperator(token.get(0)) || isOperator(token.get(p-1)) || 
+        if (isOperator(token.get(0)) && isOperator(token.get(p-1)) || 
                 "8".equals(token.get(0)) || "8".equals(token.get(p-1)) || 
                 isOperator(token.get(0)) && isOperator(token.get(1)) ||
-                "10".equals(token.get(p-1)) && isOperator(token.get(p-2)))
+                "10".equals(token.get(p-1)) && isOperator(token.get(p-2))) 
             cek1 = false;
         return cek1 && cek2;
     }
